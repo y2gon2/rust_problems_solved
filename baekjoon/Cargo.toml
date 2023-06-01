@@ -6,3 +6,4 @@ edition = "2021"
 [[example]]
 name = "boj_1920"
 path = "data_structures/boj_1920.rs"
+
