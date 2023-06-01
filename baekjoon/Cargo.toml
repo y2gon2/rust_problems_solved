@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
-name = "ds_test"
-path = "data_structures/ds_test.rs"
+name = "boj_1920"
+path = "data_structures/boj_1920.rs"
