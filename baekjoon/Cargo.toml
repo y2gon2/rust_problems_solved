@@ -7,3 +7,7 @@ edition = "2021"
 name = "boj_1920"
 path = "data_structures/boj_1920.rs"
 
+[[example]]
+name = "test"
+path = "data_structures/test.rs"
+
