@@ -2,33 +2,33 @@
 
 use std::io::{self, *};
 
-// fn main() -> Result<()>{
-//     let mut stdin = BufReader::new(stdin().lock());
-//     let mut stdout = BufWriter::new(stdout().lock());
+fn main() -> Result<()>{
+    let mut stdin = BufReader::new(stdin().lock());
+    let mut stdout = BufWriter::new(stdout().lock());
 
-//     let mut s = String::new();
-//     stdin.read_to_string(&mut s).unwrap();
+    let mut s = String::new();
+    stdin.read_to_string(&mut s).unwrap();
 
-//     let bars: Vec<usize> = s
-//         .split_ascii_whitespace()
-//         .map(|x| x.parse::<usize>().unwrap())
-//         .collect();
+    let input = s
+        .split_ascii_whitespace()
+        .map(|x| x.parse::<usize>().unwrap());
     
-//     let bars_len = bars.len();
-//     let mut base_line = bars_len;
-//     let mut result = 1;
+    let bars: Vec<usize> = input.skip(1).collect();
+    let bars_iter = bars.iter().rev();
+    let mut tallest: usize = 0;
+    let mut result: usize = 0;
 
-//     for i in 1..bars_len - 1 {
-//         if bars[bars_len - 1 - i] > base_line {
-//             result += 1;
-//             base_line = bars[bars_len - 1 - i];
-//         }
-//     }
+    for bar in bars_iter {
+        if bar > &tallest {
+            result += 1;
+            tallest = bar.clone();
+        }
+    }
 
-//     println!("{}", result);
+    println!("{}", result);
 
-//     Ok(())
-// }
+    Ok(())
+}
 
 
 // reference code  ID: falsetru https://www.acmicpc.net/source/45776489
@@ -66,29 +66,29 @@ use std::io::{self, *};
 
 // 1st passing code 
 
-fn main() {
-    let mut buffer = String::new();
-    stdin().read_line(&mut buffer).unwrap();
-    let n = buffer.trim().parse::<usize>().unwrap();
-    let mut bars: Vec<usize> = Vec::new();
+// fn main() {
+//     let mut buffer = String::new();
+//     stdin().read_line(&mut buffer).unwrap();
+//     let n = buffer.trim().parse::<usize>().unwrap();
+//     let mut bars: Vec<usize> = Vec::new();
 
-    for _ in 0..n {
-        buffer.clear();
-        stdin().read_line(&mut buffer).unwrap();
-        let bar = buffer.trim().parse::<usize>().unwrap();
-        bars.push(bar);
-    }
+//     for _ in 0..n {
+//         buffer.clear();
+//         stdin().read_line(&mut buffer).unwrap();
+//         let bar = buffer.trim().parse::<usize>().unwrap();
+//         bars.push(bar);
+//     }
 
-    let mut base_line = bars[n-1];
+//     let mut base_line = bars[n-1];
 
-    let mut result = 1;
-    for i in 0..n - 1 {
-        if bars[n - 2 - i] > base_line {
-            result += 1;
-            base_line = bars[n - 2 - i];
-        } 
-    }
+//     let mut result = 1;
+//     for i in 0..n - 1 {
+//         if bars[n - 2 - i] > base_line {
+//             result += 1;
+//             base_line = bars[n - 2 - i];
+//         } 
+//     }
 
-    println!("{}", result);
-}
+//     println!("{}", result);
+// }
  
