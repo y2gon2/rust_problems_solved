@@ -11,7 +11,9 @@ path = "data_structures/boj_1920.rs"
 name = "boj_17608"
 path = "data_structures/boj_17608.rs"
 
-
+[[example]]
+name = "boj_2605"
+path = "data_structures/boj_2605.rs"
 
 
 
