@@ -1,10 +1,11 @@
 // https://www.acmicpc.net/problem/17608
 
-use std::io::{self, *};
+
+use std::io::*;
 
 fn main() -> Result<()>{
     let mut stdin = BufReader::new(stdin().lock());
-    let mut stdout = BufWriter::new(stdout().lock());
+    //let mut stdout = BufWriter::new(stdout().lock());
 
     let mut s = String::new();
     stdin.read_to_string(&mut s).unwrap();
