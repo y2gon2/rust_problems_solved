@@ -4,10 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
-name = "boj_1920"
-path = "data_structures/boj_1920.rs"
-
-[[example]]
 name = "boj_17608"
 path = "data_structures/boj_17608.rs"
 
@@ -15,8 +11,13 @@ path = "data_structures/boj_17608.rs"
 name = "boj_2605"
 path = "data_structures/boj_2605.rs"
 
+[[example]]
+name = "boj_10815"
+path = "binary_search/boj_10815.rs"
 
-
+[[example]]
+name = "boj_1920"
+path = "binary_search/boj_1920.rs"
 
 [[example]]
 name = "test"
