@@ -1,3 +1,6 @@
+// https://www.acmicpc.net/problem/1302
+// https://www.acmicpc.net/source/52344658
+
 // fn read_line(buf: &mut String) {
 //     buf.clear();
 //     std::io::stdin().read_line(buf).unwrap();
@@ -18,7 +21,16 @@ fn main() {
     // let n = buf.trim().parse::<i32>().unwrap();
     // let titles = parse_str_vec_lines(&mut buf, n);
 
-    std::io::stdin().read_line()
+    std::io::stdin().read_line(&mut buf).unwrap();
+    let n = buf.trim().parse::<i32>().unwrap();
+    let mut titles: Vec<_> = Vec::new();
+
+    for _ in 0..n{
+        buf.clear();
+        std::io::stdin().read_line(&mut buf).unwrap();
+        let title = buf.trim().parse::<String>().unwrap();
+        titles.push(title);
+    }
 
 
     let mut max_count = 0;
@@ -32,7 +44,9 @@ fn main() {
         })
         .collect();
 
-    for x in 0..n as usize {
-        println!("{} : {}", counts[x].0, counts[x].1);
-    }
+    
+    let mut best_seller: Vec<_> = counts
+        .iter()
+        .filter_map(|&(title, count)| (count == max_count).then(|| title))
+        .collect();
 }
