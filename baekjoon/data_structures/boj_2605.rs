@@ -1,6 +1,6 @@
 // https://www.acmicpc.net/problem/2605
 
-use std::io::{self, *};
+use std::io::*;
 
 fn main() -> Result<()> {
     let mut buffer = String::new();
@@ -17,20 +17,21 @@ fn main() -> Result<()> {
     
     let mut result: Vec<usize> = (1..n + 1).collect();
     
-    for i in 1..n {
-        let switch: usize = move_rules[i];
 
-        for j in switch..0 {
-            let temp = result[j];
-            result[j] = result[j - 1];
-            result[j - 1] = temp;
+    for i in 1..n {
+        let switch = move_rules[i];
+
+        for j in 0..switch {
+            let temp = result[i - j];
+            result[i - j] = result[i - j - 1];
+            result[i - j - 1] = temp;
         }
     }
 
     for x in 0..n {
-        println!()
+        print!("{} ", result[x]);
+
     }
 
-    
     Ok(())
 }
