@@ -1,6 +1,9 @@
 // https://www.acmicpc.net/problem/17608
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9a56c93a4db49ca1fbd04c25b7ddd5c5c8d9248c
 use std::io::*;
 
 fn main() -> Result<()>{
