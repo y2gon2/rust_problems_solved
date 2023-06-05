@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "boj_2304"
+path = "data_structures/boj_2304.rs"
+
+[[example]]
 name = "boj_3986"
 path = "data_structures/boj_3986.rs"
 
