@@ -1,8 +1,7 @@
-
 // https://www.acmicpc.net/problem/1302
 
 use std::io::*;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 fn main() -> Result<()> {
     let mut buffer = String::new();

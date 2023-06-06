@@ -1,10 +1,12 @@
+// https://www.acmicpc.net/problem/2161
+
 use std::io::*;
 use std::collections::VecDeque;
 
 fn main() -> Result<()> {
     let mut buffer = String::new();
     stdin().read_line(&mut buffer).unwrap();
-    let mut num = buffer.trim().parse::<usize>().unwrap();
+    let num = buffer.trim().parse::<usize>().unwrap();
 
     let mut result: Vec<usize> = (1..=num)
         .filter(|x| x % 2 == 1)
