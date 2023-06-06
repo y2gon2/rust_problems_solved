@@ -67,17 +67,20 @@ impl<T> MyQueue<T> {
     }
 
     fn back(&self) -> Option<&T> {
-        match &self.head {
-            None => None,
-            Some(mut cur_node) => {
-                loop {
-                    match &cur_node.next {
-                        None => return Some(&cur_node.data),
-                        Some(and_then) => cur_node = and_then,
-                    }
-                }
-            }
+        let mut cur_node = &self.head;
+
+        match cur_node {
+            None => return None,
+            Some(next) => return Self::sub_back(next),
         }
+    }
+
+    fn sub_back(node: &Box<Node<T>>) -> Option<&T> {
+        match node.next {
+            None => return Some(&node.data),
+            Some(ref next) => Self::sub_back(next), 
+        }
+
     }
 
 }
