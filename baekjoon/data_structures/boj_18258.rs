@@ -59,19 +59,22 @@ impl<T> MyQueue<T> {
         }
     }
 
-    fn front(&self) -> Option<T> {
+    fn front(&self) -> Option<&T> {
         match &self.head {
             None => None,
-            Some(next_node) => Some(next_node.data), 
+            Some(next_node) => Some(&next_node.data), 
         }
     }
 
-    fn back(&self) -> Option<T> {
+    fn back(&self) -> Option<&T> {
         match &self.head {
             None => None,
-            Some(next_node) => {
+            Some(mut cur_node) => {
                 loop {
-
+                    match &cur_node.next {
+                        None => return Some(&cur_node.data),
+                        Some(and_then) => cur_node = and_then,
+                    }
                 }
             }
         }
@@ -101,11 +104,18 @@ fn main() -> Result<()> {
 
     let mut my_queue = MyQueue::<usize>::new();
     
-    my_queue.push(1);
-    my_queue.push(2);
-    my_queue.pop();
+    my_queue.push(10);
+    my_queue.push(20);
+    my_queue.push(30);
+    if let Some(x) = my_queue.pop() {
+        println!("pop : {}", x);
+    }
 
-    println!{"{}", my_queue.size()};
+    println!{"size : {}", my_queue.size()};
+
+    if let Some(x) = my_queue.front() {
+        println!("front: {}", x);
+    }
 
     Ok(())
 }

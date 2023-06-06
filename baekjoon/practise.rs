@@ -1,52 +1,35 @@
-// https://www.acmicpc.net/problem/1302
-// https://www.acmicpc.net/source/52344658
 
-// fn read_line(buf: &mut String) {
-//     buf.clear();
-//     std::io::stdin().read_line(buf).unwrap();
-// }
-
-// fn parse_str_vec_lines(buf: &mut String, n: i32) -> Vec<String> {
-//     (0..n)
-//         .map(|_| {
-//             buf.trim().to_string()
-//         })
-//         .collect()
-// }
 
 fn main() {
-    let mut buf = String::new();
-    // read_line(&mut buf);
+    let x = 5;
+    let y = &x;
+    let z = &y;
 
-    // let n = buf.trim().parse::<i32>().unwrap();
-    // let titles = parse_str_vec_lines(&mut buf, n);
+    match y {
+        &a => println!("{}", a), // &a : i32
+    } 
+    // match arm 에서 & 는 해당 변수값에 대한 참조가 아니라.
+    // 해당 변수 value 가 이미 참조 형일 때, 그 참조형 value 가 
+    // 가리키고 있는 value 를 가리킨다. 
+    // 따라서 해당 &a 의 자료형은 &i32 가 아닌  i32 가 되며
 
-    std::io::stdin().read_line(&mut buf).unwrap();
-    let n = buf.trim().parse::<i32>().unwrap();
-    let mut titles: Vec<_> = Vec::new();
+    /*
+    match x {
+        &a => println!("z : {}", a), // 타입 불일치에 따른 에러 발생
+    } 
+    */
+    // 이와같이 참조형 value 를 가지지 않고 실제 value 를 가진 변수에
+    // & 를 사용하면 해당 value 에 대한 타입 불일치로 에러가 발생한다. 
 
-    for _ in 0..n{
-        buf.clear();
-        std::io::stdin().read_line(&mut buf).unwrap();
-        let title = buf.trim().parse::<String>().unwrap();
-        titles.push(title);
+    match x {
+        ref a => println!("{}", a), // ref a: &i32
+    } 
+    // 따라서 value 에 대한 참조로 match arm 에서 사용하고 싶다면
+    // ref 키워드를 사용해 줘야 한다. 
+
+    match y {
+        ref a => println!("{}", a), // ref a: &&i32
     }
 
 
-    let mut max_count = 0;
-    let counts: Vec<_> = titles
-        .iter()
-        .map(|title| {
-            let count = titles.iter().filter(|&t| t == title).count();
-            max_count = count.max(max_count);
-
-            (title, count)
-        })
-        .collect();
-
-    
-    let mut best_seller: Vec<_> = counts
-        .iter()
-        .filter_map(|&(title, count)| (count == max_count).then(|| title))
-        .collect();
 }
