@@ -19,7 +19,7 @@ fn main() -> Result<()> {
     let mut stack: Vec<_> = Vec::new();
     let mut result: usize = 0;
 
-    for i in 0..n {
+    for _ in 0..n {
         if let Some(word) = words.pop() {
             if word.len() % 2 != 0 { continue; }
             
