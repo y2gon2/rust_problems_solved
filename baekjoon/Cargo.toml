@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "g03_13305"
+path = "greedy/g03_13305.rs"
+
+[[example]]
 name = "g02_2217"
 path = "greedy/g02_2217.rs"
 
