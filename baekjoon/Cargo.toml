@@ -4,6 +4,14 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "notmy_1213"
+path = "not_my_code/1213_BTreeMap_Vec_fliter.rs"
+
+[[example]]
+name = "g04_1213"
+path = "greedy/g04_1213.rs"
+
+[[example]]
 name = "g03_13305"
 path = "greedy/g03_13305.rs"
 
