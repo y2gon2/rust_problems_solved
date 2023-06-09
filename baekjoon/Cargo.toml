@@ -3,6 +3,13 @@ name = "baekjoon"
 version = "0.1.0"
 edition = "2021"
 
+[dependencies]
+itertools = "0.10.5"
+
+[[example]]
+name = "g05_10610"
+path = "greedy/g05_10610.rs"
+
 [[example]]
 name = "notmy_1213"
 path = "not_my_code/1213_BTreeMap_Vec_fliter.rs"
