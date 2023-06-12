@@ -6,7 +6,7 @@ use std::cmp::min;
 fn main() -> Result<()> {
     let mut buffer = String::new();
     stdin().read_line(&mut buffer).unwrap();
-    let n = buffer.trim().parse::<usize>().unwrap();
+    let _n = buffer.trim().parse::<usize>().unwrap();
 
     buffer.clear();
     stdin().read_line(&mut buffer).unwrap();
