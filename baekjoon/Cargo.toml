@@ -8,6 +8,10 @@ itertools = "0.10.5"
 
 
 [[example]]
+name = "geo03_1485"
+path = "geometry/geo03_1485.rs"
+
+[[example]]
 name = "geo02_2477"
 path = "geometry/geo02_2477.rs"
 
