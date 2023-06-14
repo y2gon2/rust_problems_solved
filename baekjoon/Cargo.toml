@@ -6,6 +6,9 @@ edition = "2021"
 [dependencies]
 itertools = "0.10.5"
 
+[[example]]
+name = "geo04_2527"
+path = "geometry/geo04_2527.rs"
 
 [[example]]
 name = "geo03_1485"
