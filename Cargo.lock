@@ -3,6 +3,10 @@
 version = 3
 
 [[package]]
+name = "LeetCode"
+version = "0.1.0"
+
+[[package]]
 name = "baekjoon"
 version = "0.1.0"
 dependencies = [
