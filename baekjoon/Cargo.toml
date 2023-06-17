@@ -7,6 +7,10 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "geo08_3495"
+path = "geometry/geo08_3495.rs"
+
+[[example]]
 name = "geo07_1198"
 path = "geometry/geo07_1198.rs"
 
