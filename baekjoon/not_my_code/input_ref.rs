@@ -1,10 +1,8 @@
-use std::thread;
 use std::cmp::{max, min, Ordering};
 use std::collections::{BinaryHeap, HashMap, VecDeque};
 use std::io::{stdin, stdout, BufWriter, prelude::*};
 use std::fmt::Write as fWrite;
 use std::ops::Range;
-use std::time::SystemTime;
 
 const N_MAX: usize = 100_000;
 const K_MAX: usize = 10_000;
