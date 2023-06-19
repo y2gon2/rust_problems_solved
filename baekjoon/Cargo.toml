@@ -7,6 +7,14 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "bi06_16401"
+path = "binary_search/bi06_16401.rs"
+
+[[example]]
+name = "bi05_1654"
+path = "binary_search/bi05_1654.rs"
+
+[[example]]
 name = "bi04_13702"
 path = "binary_search/bi04_13702.rs"
 

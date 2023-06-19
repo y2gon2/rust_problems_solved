@@ -31,6 +31,8 @@ fn main() -> Result<()> {
     let mut mx: usize = n - 1;
     while mn <= mx {
         let mid = (mn + mx) / 2;
+
+        
         
 
 
