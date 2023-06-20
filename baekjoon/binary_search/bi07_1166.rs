@@ -29,7 +29,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             mx = mid;
         }
 
-        println!("mn:{} mid:{} mx:{}", mn, mid, mx);
+        // println!("mn:{} mid:{} mx:{}", mn, mid, mx);
     }
 
     writeln!(output, "{:.9}", mx)?;
