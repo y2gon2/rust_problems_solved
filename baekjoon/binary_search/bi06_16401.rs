@@ -3,6 +3,7 @@
 
 use std::io::{stdin, stdout, Write, BufRead, BufWriter, Result};
 
+
 fn main() -> Result<()> {
     let mut input = stdin().lock().lines().map(|line| line.unwrap());
     let mut output = BufWriter::new(stdout().lock());
