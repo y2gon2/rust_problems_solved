@@ -1,7 +1,7 @@
 // https://www.acmicpc.net/problem/2512
 // 예산
 
-use std::io::{stdin, stdout, BufRead, BufWriter, Write, Read};
+use std::io::{stdin, stdout, BufRead, BufWriter, Write};
 use std::error::Error;
 
 fn read_n(input: Option<String>) -> usize {
@@ -15,7 +15,7 @@ fn read_n(input: Option<String>) -> usize {
 fn read_v(input: Option<String>) -> Vec<usize> {
     let mut result: Vec<usize> = Vec::new();
     if let Some(x) = input {
-        result = x.split_ascii_whitespace().map(|mut s| s.parse::<usize>().unwrap()).collect();
+        result = x.split_ascii_whitespace().map(|s| s.parse::<usize>().unwrap()).collect();
     }
     result
 }
