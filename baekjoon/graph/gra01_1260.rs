@@ -74,7 +74,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
 
     let first_info = line()?;
-    let (n, m, v) = (first_info[0], first_info[1], first_info[2]);
+    let (_, m, v) = (first_info[0], first_info[1], first_info[2]);
     
     let mut map: HashMap<usize, Vec<usize>> = HashMap::new();
     for _ in 0..m {
@@ -83,7 +83,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         map.entry(link[1]).and_modify(|v| v.push(link[0])).or_insert(vec![link[0]]);
     }
 
-    for (k, v) in map.iter_mut() {
+    for (_, v) in map.iter_mut() {
         v.sort();
     }
 
