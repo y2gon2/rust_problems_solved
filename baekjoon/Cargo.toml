@@ -7,9 +7,32 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "gra04_2644"
+path = "graph/gra04_2644.rs"
+
+[[example]]
+name = "gra03_11725"
+path = "graph/gra03_11725.rs"
+
+[[example]]
+name = "set01_2776"
+path = "binary_search/set01_2776.rs"
+
+[[example]]
+name = "two03_3649"
+path = "binary_search/two03_3649.rs"
+
+[[example]]
+name = "bi08_10816"
+path = "binary_search/bi08_10816.rs"
+
+[[example]]
+name = "gra02_1389"
+path = "graph/gra02_1389.rs"
+
+[[example]]
 name = "gra01_1260"
 path = "graph/gra01_1260.rs"
-
 
 [[example]]
 name = "two02_1253"
