@@ -10,11 +10,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     stdin().lock().read_to_string(&mut buf)?;
     
     let mut input = buf.split_ascii_whitespace();
+    let mut read = || -> Result<&str, Box<dyn Error>> {
+        match input.next() {
+            Some(x) => Ok(x),
+            None => Err("No more input".into()),
+        }
+    };
 
-    let people = input.next().unwrap().parse::<usize>()?;
-    let start = input.next().unwrap().parse::<usize>()?;
-    let finish = input.next().unwrap().parse::<usize>()?;
-    let _link = input.next().unwrap().parse::<usize>()?;
+    let people = read()?.parse::<usize>()?;
+    let start = read()?.parse::<usize>()?;
+    let finish = read()?.parse::<usize>()?;
+    let _link = read()?.parse::<usize>()?;
 
     let mut nodes = vec![vec![false; people + 1]; people + 1];
     while let Some(a) = input.next() {
