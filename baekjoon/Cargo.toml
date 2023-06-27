@@ -7,12 +7,12 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
-name = "gra07_10026"
-path = "graph/gra07_10026.rs"
+name = "BFS02_10026"
+path = "graph/BFS02_10026.rs"
 
 [[example]]
-name = "gra06_2583"
-path = "graph/gra06_2583.rs"
+name = "BFS01_2583"
+path = "graph/BFS01_2583.rs"
 
 [[example]]
 name = "gra05_11403"
@@ -43,8 +43,8 @@ name = "gra02_1389"
 path = "graph/gra02_1389.rs"
 
 [[example]]
-name = "gra01_1260"
-path = "graph/gra01_1260.rs"
+name = "DFSBFS01_1260"
+path = "graph/DFSBFS01_1260.rs"
 
 [[example]]
 name = "two02_1253"
