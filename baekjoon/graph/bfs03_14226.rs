@@ -6,7 +6,7 @@ use std::error::Error;
 use std::collections::VecDeque;
 
 fn bfs(n: usize) -> Result<usize, Box<dyn Error>> {
-    let mut imojis: Vec<usize> = vec![0; n * 2 - 1];
+    let mut imojis: Vec<usize> = vec![usize::MAX; n * 2 - 1];
     let mut visited = vec![false; n * 2 - 1];
     let mut queue = VecDeque::<(usize, usize)>::new();
 
@@ -15,23 +15,19 @@ fn bfs(n: usize) -> Result<usize, Box<dyn Error>> {
     imojis[2] = 2;
 
     queue.push_back((2, 2));
-    while imojis[n] > 0 {
-        let (position, cnt) = queue.pop_front().unwrap();
-        visited[position] = true;
+    while imojis[n] < usize::MAX {
+        let (pos, cnt) = queue.pop_front().unwrap();
+        visited[pos] = true;
 
-        let back = position - 1;
-        let forward = position + 1;
-        let jump = position * 2;
-        if position - 1 > 1 && position * 2 < n * 2 - 1 {
-
+        if !visited[pos - 1] && imojis[pos - 1] > cnt + 1 {
+            queue.push_back((pos - 1, cnt + 1));
+        }
+        if pos * 2 < n * 2 - 1 {
+            queue.push_back((pos * 2, cnt + 2));
         }
     }
-    
-
-
     Ok(imojis[n])
 }
-
 
 fn main() -> Result<(), Box<dyn Error>> {
     let buf = read_to_string(stdin().lock())?;
