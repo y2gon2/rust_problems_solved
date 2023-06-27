@@ -7,6 +7,18 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "gra07_10026"
+path = "graph/gra07_10026.rs"
+
+[[example]]
+name = "gra06_2583"
+path = "graph/gra06_2583.rs"
+
+[[example]]
+name = "gra05_11403"
+path = "graph/gra05_11403.rs"
+
+[[example]]
 name = "gra04_2644"
 path = "graph/gra04_2644.rs"
 
