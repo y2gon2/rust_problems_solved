@@ -1,5 +1,5 @@
 // https://www.acmicpc.net/problem/1260
-// DEF 와 BFS
+// DFS 와 BFS
 
 use std::io::{stdin, stdout, BufWriter, BufRead, Write};
 use std::error::Error;

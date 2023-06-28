@@ -5,28 +5,43 @@ use std::io::{stdin, stdout, read_to_string, Write};
 use std::error::Error;
 use std::collections::VecDeque;
 
-fn bfs(n: usize) -> Result<usize, Box<dyn Error>> {
-    let mut imojis: Vec<usize> = vec![usize::MAX; n * 2 - 1];
-    let mut visited = vec![false; n * 2 - 1];
-    let mut queue = VecDeque::<(usize, usize)>::new();
+const MX: usize = 1001;
 
-    visited[1] = true;
-    imojis[1] = 1;
-    imojis[2] = 2;
+fn bfs(n: usize) -> usize {
+    let mut visited = [[false; MX]; MX]; // (position,  clipboard)
+    let mut queue = VecDeque::<(usize, usize, usize)>::new();
+    let mut result = 0usize;
 
-    queue.push_back((2, 2));
-    while imojis[n] < usize::MAX {
-        let (pos, cnt) = queue.pop_front().unwrap();
-        visited[pos] = true;
-
-        if !visited[pos - 1] && imojis[pos - 1] > cnt + 1 {
-            queue.push_back((pos - 1, cnt + 1));
+    visited[1][0] = true;
+    queue.push_back((1, 0, 0)); // position, clipboard, counter
+    while let Some((pos, clip, cnt)) = queue.pop_front() {
+        if pos == n { 
+            result = cnt; 
+            break;
         }
-        if pos * 2 < n * 2 - 1 {
-            queue.push_back((pos * 2, cnt + 2));
+
+        if !visited[pos][pos] {
+            queue.push_back((pos, pos, cnt + 1)); // 현재 화면에 있는 이모티콘 복사
+            visited[pos][pos] = true;
         }
+
+        if clip > 0 && pos + clip < n + 1 {
+            if !visited[pos + clip][clip] {
+                queue.push_back((pos + clip, clip, cnt + 1)); // clipboard 붙여넣기
+                visited[pos + clip][clip] = true;
+            }
+        }
+
+        if pos > 1 {
+            if !visited[pos - 1][clip] {
+                queue.push_back((pos - 1, clip, cnt + 1)); // 화면의 이모티콘 1개 삭제
+                visited[pos - 1][clip] = true;
+            }
+        }            
+        // println!("{:?}", queue);
     }
-    Ok(imojis[n])
+
+    result
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -34,6 +49,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     let n = buf.trim().parse::<usize>()?;
 
     let mut output = stdout().lock();
-    writeln!(output, "{}", bfs(n)?)?;
+    writeln!(output, "{}", bfs(n))?;
     Ok(())
 }
