@@ -25,7 +25,7 @@ fn bfs(size: Vec<usize>, boxes: &mut Vec<Vec<Vec<i32>>>, start_q: &mut VecDeque:
                     let z = z as usize;
                     let y = y as usize;
                     let x = x as usize;
-                    let cnt = cnt + 1;
+                    let cnt = cnt + 1; 
             
                     if boxes[z][y][x] == -1 || boxes[z][y][x] == 1 { continue; }
                     if boxes[z][y][x] > cnt {
