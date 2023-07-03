@@ -21,7 +21,6 @@ use std::error::Error;
 fn binary_search(m: usize, distances: &mut Vec<usize>) -> usize {
     let mut mn = 1usize;
     let mut mx = distances[0];
-    let mut cnt = 0usize;
 
     while mn <= mx {
         let mid = (mn + mx) / 2;
@@ -43,7 +42,7 @@ fn binary_search(m: usize, distances: &mut Vec<usize>) -> usize {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut input = read_to_string(stdin().lock())?;
+    let input = read_to_string(stdin().lock())?;
     let mut read = input.split_ascii_whitespace();
     
     let n = read.next().unwrap().parse::<usize>()?;
