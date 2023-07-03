@@ -7,6 +7,30 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "bi09_1477"
+path = "binary_search/bi09_1477.rs"
+
+[[example]]
+name = "dyn01_12852"
+path = "graph/dyn01_12852.rs"
+
+[[example]]
+name = "dfs01_1926"
+path = "graph/dfs01_1926.rs"
+
+[[example]]
+name = "bfs06_16234"
+path = "graph/bfs06_16234.rs"
+
+[[example]]
+name = "back01_15649"
+path = "brute_force/back01_15649.rs"
+
+[[example]]
+name = "bru01_16198"
+path = "brute_force/bru01_16198.rs"
+
+[[example]]
 name = "n01_17427"
 path = "math/n01_17427.rs"
 
