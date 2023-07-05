@@ -19,7 +19,7 @@
 //! 그때 그때 iterator 를 이동시켜서 data 를 받아서 활용 (vec 생성 과정 제거)
 //! -> 30760KB / 48ms
 
-use std::io::{stdin, stdout, Read, Write, read_to_string, BufRead};
+use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
 
 
