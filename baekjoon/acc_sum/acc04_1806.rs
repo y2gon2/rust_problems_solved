@@ -13,7 +13,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut result = usize::MAX;
     
     let mut buf = String::new();
-    stdin().lock().read_to_string(&mut buf);
+    let _ = stdin().lock().read_to_string(&mut buf);
 
     let mut line = buf.lines();
 
