@@ -7,24 +7,28 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "acc06_10986"
+path = "prefix_sum/acc06_10986.rs"
+
+[[example]]
 name = "acc05_1451"
 path = "acc_sum/acc05_1451.rs"
 
 [[example]]
 name = "acc04_1806"
-path = "acc_sum/acc04_1806.rs"
+path = "prefix_sum/acc04_1806.rs"
 
 [[example]]
 name = "acc03_25682"
-path = "acc_sum/acc03_25682.rs"
+path = "prefix_sum/acc03_25682.rs"
 
 [[example]]
 name = "acc02_16139"
-path = "acc_sum/acc02_16139.rs"
+path = "prefix_sum/acc02_16139.rs"
 
 [[example]]
 name = "acc01_11660"
-path = "acc_sum/acc01_11660.rs"
+path = "prefix_sum/acc01_11660.rs"
 
 [[example]]
 name = "bi12_2417"
