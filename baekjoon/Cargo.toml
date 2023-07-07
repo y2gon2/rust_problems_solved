@@ -7,6 +7,10 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "acc07_14465"
+path = "prefix_sum/acc07_14465.rs"
+
+[[example]]
 name = "acc06_10986"
 path = "prefix_sum/acc06_10986.rs"
 
