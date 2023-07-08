@@ -6,7 +6,7 @@ use std::io::{stdin, stdout, Write, Read};
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut result = 0usize;
+    let mut result = 0_usize;
     let mut output = stdout().lock();
 
     let mut buf = String::new();
@@ -15,8 +15,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut buf_iter = buf.split_ascii_whitespace();
     let n = buf_iter.next().unwrap().parse::<usize>()?;
 
-    let mut acc = vec![0usize; n + 1];
-    let mut largest = 0usize;
+    let mut acc = vec![0_usize; n + 1];
+    let mut largest = 0_usize;
 
     for i in 1..=n {
         let cur = buf_iter.next().unwrap().parse::<usize>()?;
@@ -26,26 +26,24 @@ fn main() -> Result<(), Box<dyn Error>> {
     // println!("{:?}", acc);
     // println!("{} {} {}", (acc[n] - acc[2]) * 2, acc[n - 2] * 2, acc[n - 1] - acc[1] + largest);
 
-    if acc[1] <= acc[n] - acc[n - 1] {
-        for second in 2..n {
-            let alone_part = acc[second - 1] - acc[1];
-            let duplicated_part = acc[n] - acc[second];
 
-            result = result.max(alone_part + (duplicated_part * 2));
+    for second in 2..n {
+        // 왼쪽끝 첫번째 벌 오른쪽 끝 벌집, 두번째 벌은 그 중간에 위치
+        let alone_part_left = acc[second - 1] - acc[1];
+        let duplicated_part_left = acc[n] - acc[second];
 
-            println!("1. second:{}  sum:{} al:{} du:{}",  second, alone_part + (duplicated_part * 2), alone_part, duplicated_part);
-        }
-    } else {
-        for second in 2..n {
-            let duplicated_part = acc[second - 1];
-            let alone_part = acc[n - 1] - acc[second];
+        result = result.max(alone_part_left + (duplicated_part_left * 2));
 
-            result = result.max(alone_part + (duplicated_part * 2));
-            println!("2. second:{}  sum:{} du:{}",  second, alone_part + (duplicated_part * 2), duplicated_part);
-        }
+
+        // 오른쪽끝 첫번째 벌 왼쪽쪽 끝 벌집, 두번째 벌은 그 중간에 위치
+        let duplicated_part_right = acc[second - 1];
+        let alone_part_right = acc[n - 1] - acc[second];
+
+        result = result.max(alone_part_right + (duplicated_part_right * 2));
     }
 
-    result = result.max(acc[n - 1] - acc[1] + largest); // 가장 꿀이 많은 곳을 벌집으로 하고 벌들이 양 끝에서 출발하는 경우   
+    // (양끝이 아닌)가장 꿀이 많은 곳을 벌집으로 하고 벌들이 양 끝에서 출발하는 경우   
+    result = result.max(acc[n - 1] - acc[1] + largest); 
  
     writeln!(output, "{}", result)?;
     Ok(())

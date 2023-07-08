@@ -1,7 +1,5 @@
 //! https://www.acmicpc.net/problem/14465
 //! 소가 길을 건너간 이유 5
-//! 
-//! 
 
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
@@ -38,7 +36,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
         }
     }
-    
+
     writeln!(output, "{}", result)?;
     Ok(())
 }
