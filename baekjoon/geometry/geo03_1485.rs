@@ -4,7 +4,7 @@
 use std::io::{Result, stdin, Read};
 
 fn cal_dist_sqrt(x1: i32, y1: i32, x2: i32, y2: i32) -> i64 {
-    ((x1 as i64 - x2 as i64).pow(2) + (y1 as i64 - y2 as i64).pow(2))
+    (x1 as i64 - x2 as i64).pow(2) + (y1 as i64 - y2 as i64).pow(2)
 }
 fn main() -> Result<()> {
     // let mut output = BufWriter::new(stdout().lock());

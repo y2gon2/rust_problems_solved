@@ -65,7 +65,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     distances.sort_by(|a, b| b.cmp(a));
 
-    let mut result = binary_search(m, &mut distances);
+    let result = binary_search(m, &mut distances);
 
     let mut output = stdout().lock();
     writeln!(output, "{}", result)?;

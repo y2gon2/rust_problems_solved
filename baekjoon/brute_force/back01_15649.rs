@@ -1,7 +1,7 @@
 // https://www.acmicpc.net/problem/15649
 // N과 M (1)
 
-use std::io::{stdin, stdout, BufWriter, Write, read_to_string};
+use std::io::{stdin, read_to_string};
 use std::error::Error;
 use std::rc::Rc;
 use std::cell::RefCell;

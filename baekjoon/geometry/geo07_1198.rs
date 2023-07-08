@@ -1,11 +1,11 @@
 // https://www.acmicpc.net/problem/1198
 // 삼각형으로 자르기
 
-use std::io::{Result, stdin, Write, BufRead, BufWriter, stdout};
+use std::io::{Result, stdin, BufRead, BufWriter, stdout};
 
 fn main() -> Result<()> {
     let mut input = stdin().lock().lines().map(|line| line.unwrap());
-    let mut output = BufWriter::new(stdout().lock());
+    let mut _output = BufWriter::new(stdout().lock());
     let mut mx_area: i64 = 0;
 
     let n = input.next().unwrap().parse::<i64>().unwrap();

@@ -8,7 +8,7 @@
 //! 잘 정리해서 문제를 풀 경우, 결국 동일 시간 복잡도 내에서 과정이 추가되었을 뿐이라는 것을 
 //! 확인 할 수 있었다. 
 
-use std::io::{stdin, stdout, Read, Write, read_to_string};
+use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {

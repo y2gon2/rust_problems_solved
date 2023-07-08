@@ -26,7 +26,7 @@ fn main() -> Result<()> {
         let mut cross: usize = 0;
 
         for _ in 0..m {
-            let mut nums: Vec<i32> = lines
+            let nums: Vec<i32> = lines
                 .next()
                 .unwrap()
                 .split_ascii_whitespace()
