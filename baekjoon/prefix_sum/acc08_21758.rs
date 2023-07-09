@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         result = result.max(alone_part_right + (duplicated_part_right * 2));
     }
 
-    // (양끝이 아닌)가장 꿀이 많은 곳을 벌집으로 하고 벌들이 양 끝에서 출발하는 경우   
+    // 양끝이 아닌 곳 중 꿀이 많은 곳을 벌집으로 하고 벌들이 양 끝에서 출발하는 경우   
     result = result.max(acc[n - 1] - acc[1] + largest); 
  
     writeln!(output, "{}", result)?;

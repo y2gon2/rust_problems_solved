@@ -4,27 +4,26 @@
 
 
 use std::io::{stdin, stdout, Read, Write};
-// use std::error::Error;
+use std::error::Error;
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let mut result = 0;
     let mut output = stdout().lock();
 
     let mut buf = String::new();
-    let _ = stdin().lock().read_to_string(&mut buf).unwrap();
+    let _ = stdin().lock().read_to_string(&mut buf)?;
     let mut buf_iter = buf.split_ascii_whitespace();
     let mut get_num = || buf_iter
         .next()
         .unwrap()
-        .parse::<usize>()
-        .unwrap();
+        .parse::<usize>();
     
-    let (n, m, k) = (get_num(), get_num(), get_num());
+    let (n, m, k) = (get_num()?, get_num()?, get_num()?);
 
-    let mut aisle = [[false; 100]; 100];
+    let mut aisle = vec![vec![false; m]; n];
 
     for _ in 0..k {
-        let (y, x) = (get_num(), get_num());
+        let (y, x) = (get_num()?, get_num()?);
 
         aisle[y - 1][x - 1] = true;
     }
@@ -63,6 +62,6 @@ fn main() {
             result = result.max(cnt);
         }
     }
-    writeln!(output, "{}", result);
-    
+    writeln!(output, "{}", result)?;
+    Ok(())
 }
