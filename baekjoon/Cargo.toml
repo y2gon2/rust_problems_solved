@@ -7,6 +7,10 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "dfs04_1987"
+path = "graph/dfs04_1987.rs"
+
+[[example]]
 name = "dfs03_14502"
 path = "graph/dfs03_14502.rs"
 
