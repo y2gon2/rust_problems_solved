@@ -34,18 +34,40 @@ fn get_board() -> Result<Vec<Vec<char>>, Box<dyn Error>> {
 }
 
 fn dfs(board: Vec<Vec<char>>, r: usize, c: usize) -> Result<usize, Box<dyn Error>> {
-    let mut visited = vec![vec![false; c]; r];
-    let dirctions = [(1, 0), (0, 1), (-1, 0), (0, -1)];
+    let mut visited = vec![vec![0u8; c]; r];
+    let directions = [(1, 0), (0, 1), (-1, 0), (0, -1)];
     let mut aphabets = Vec::<char>::new();
-    let mut stack = Vec::<(usize, usize, char)>::new(); // y, x, alphabet
+    let mut stack = Vec::<(usize, usize)>::new(); // y, x
 
-    stack.push((0, 0, board[0][0]));
-    while let Some((py, px, ch)) = stack.pop() {
-        visited[py][px] = true;
-        aphabets.push(ch);
+    stack.push((0, 0));
+    visited[0][0] = 1;
+    aphabets.push(board[0][0]);
+    while let Some((py, px)) = stack.pop() {
+        
+        for (dy, dx) in directions {
+            let y = dy + py as i32;
+            let x = dx + px as i32;
+
+            if y >= 0 && x >= 0 && y < r as i32 && x < c as i32 {
+                let y = y as usize;
+                let x = x as usize;
+                
+                if aphabets.contains(&board[y][x]) { continue; }
+                
+                visited[y][x] = visited[py][px] + 1;
+                // aphabets.push(board[y][x]);
+                stack.push((y, x));
+            }
+        }
     }
 
-    Ok(aphabets.len())
+    let mut result = 0usize;
+    for i in 0..r {
+        for j in 0..c {
+            result = result.max(visited[i][j]);
+        }
+    }
+    Ok(result)
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
