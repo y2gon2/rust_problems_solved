@@ -15,23 +15,30 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut get_num = || input.next().unwrap().parse::<usize>();
 
     let n = get_num()?;
-    let mut links = Vec::<Vec<u8>>::new();
+    let mut links = Vec::<Vec<usize>>::new();
     links.push(vec![0;1]);
     let mut visited = vec![vec![false; n + 1]; n + 1];
 
     for i in 1..=n {
-        let mut row = Vec::<u8>::new();
+        let mut row = Vec::<usize>::new();
         for j in 1..=n {
             if get_num()? == 1 {
-                row.push(j as u8);
-                visited[i][j] = true;
+                row.push(j);
             }
         }
         links.push(row);
     }
 
     for i in 1..=n {
-        println!("{:?}", visited[i]);
+        let mut stack = links[i].clone();
+
+        while let Some(x) = stack.pop() {
+            visited[i][x] = true;
+
+            for x2 in  links[x].iter() {
+                if visited[][]
+            }
+        }
     }
 
     for i in 1..=n {
