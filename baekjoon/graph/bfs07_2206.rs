@@ -55,7 +55,7 @@ fn bfs(
     let mut visited = vec![vec![false; m]; n];
     let mut wrecked = vec![vec![false; m]; n];
     queue.push_back((0, 0, 1, 0));
-    while let Some((y, x, cnt, mut wrecking)) = queue.pop_front() {
+    while let Some((y, x, cnt, wrecking)) = queue.pop_front() {
         // println!("map[{}][{}], cnt:{}, wrecking:{}", y, x, cnt, wrecking);
         // println!("map[7][2]:{} visited[7][2]:{} wrecked[7][2]:{}", map[7][2], visited[7][2], wrecked[7][2]);
         
