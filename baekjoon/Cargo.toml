@@ -6,6 +6,10 @@ edition = "2021"
 [dependencies]
 itertools = "0.10.5"
 
+[[exmaple]]
+name = "bru02_14889"
+path = "brute_force/bru02_14889.rs"
+
 [[example]]
 name = "bfs07_2206"
 path = "graph/bfs07_2206.rs"
