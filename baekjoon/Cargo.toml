@@ -7,6 +7,18 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "n02_10972"
+path = "math/n02_10972.rs"
+
+[[example]]
+name = "dyn01_10844"
+path = "dynamic_programming/dyn01_10844.rs"
+
+[[example]]
+name = "bru03_3085"
+path = "brute_force/bru03_3085.rs"
+
+[[example]]
 name = "bru02_14889"
 path = "brute_force/bru02_14889.rs"
 
