@@ -56,6 +56,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut consume = vec![0usize; n];
     let mut cnt = 0usize;
     
+    #[allow(unused_assignments)]
     let mut quota = 0usize;
     match remain % n {
         0 => quota = remain / n,
