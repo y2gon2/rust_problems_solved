@@ -1,10 +1,9 @@
 //! https://www.acmicpc.net/problem/1041
 //! 주사위
-//! 
-//! 
 
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
+use std::cmp::{min, max};
 
 fn get_input() -> Result<(usize, Vec<usize>), Box<dyn Error>> {
     let mut buf = String::new();
@@ -20,17 +19,46 @@ fn get_input() -> Result<(usize, Vec<usize>), Box<dyn Error>> {
         dice[i] = get_num()?;
     }
 
-    Ok((n, dice.sort()))
+    Ok((n, dice))
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+    let mut result = 0usize;
+    let mut output = stdout().lock();
     let (n, dice) = get_input()?;
 
-    let blocks = n * n * n;
-    let face3 = dice[0] + dice[1] + dice[2];
-    let face2 = dice[0] + dice[1];
-    let mut result =  
+    let mut min3 = usize::MAX;
+    let mut min2 = usize::MAX;
+    let mut min1 = usize::MAX;
+    for i in 0..6 {
+        min1 = min(min1, dice[i]);
+        for j in (i + 1)..6 {
+            if (i == 0 && j == 5) || (i == 1 && j == 4) || (i == 2 && j == 3) { continue; }
+            min2 = min(min2, dice[i] + dice[j]);
 
+            for k in (j + 1)..6 {
+                if (i == 0 && k == 5) || (i == 1 && k == 4) || (j == 1 && k == 4) || (j == 2 && k == 3) { continue; }
+                min3 = min(min3, dice[i] + dice[j] + dice[k]);
+            }
+        }
+    }
 
+    match n {
+        1 => {
+            let mut mx = 0usize;
+            for i in 0..6{
+                result += dice[i];
+                mx = max(mx, dice[i]);
+            }
+            result -= mx;
+        },
+        2 => result = min3 * 4 + min2 * 4,
+        _ => result = min3 * 4 
+            + (n - 2) * min2 * 4 
+            + (n - 1) * min2 * 4 
+            + (n - 1) * (n - 2) * min1 * 4
+            + (n - 2) * (n - 2) * min1, 
+    }
+    writeln!(output, "{}", result)?;
     Ok(())
 }
