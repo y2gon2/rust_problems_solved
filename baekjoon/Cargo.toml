@@ -7,6 +7,10 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "sim04_14500"
+path = "simulation/sim04_14500.rs"
+
+[[example]]
 name = "sim03_2578"
 path = "simulation/sim03_2578.rs"
 
