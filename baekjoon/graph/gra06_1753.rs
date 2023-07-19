@@ -4,6 +4,8 @@
 
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
+use std::cmp::min;
+
 
 fn get_info() -> Result<(usize, usize, Vec<Vec<(usize, u8)>>), Box<dyn Error>> {
     let mut buf = String::new();
@@ -37,8 +39,10 @@ fn explore(
     result: &mut Vec<usize>,
     visited: &mut Vec<bool>
 ) {
+    // println!("from:{}, dest:{} sum:{}", from, dest, sum);
+    // println!("visited:{:?}", visited);
     if from == dest {
-        result.push(sum);
+        result[dest] = min(result[dest], sum);
         return;
     }
 
@@ -46,7 +50,7 @@ fn explore(
         if visited[*next] { continue; }
 
         visited[*next] = true;
-        explore(from, dest, graph, sum, result, visited);
+        explore(*next, dest, graph, sum + *weight as usize, result, visited);
         visited[*next] = false;
     }
 }
@@ -63,13 +67,25 @@ fn main() -> Result<(), Box<dyn Error>> {
         let mut visited = vec![false; n + 1];
         visited[start] = true;
         explore(start, dest, &graph, sum, &mut result, &mut visited);
+        // println!("result:{:?}", result);
+        // println!("---------------------------------");
+        visited[start] = false;
     }
 
+    // for i in 1..=n {
+    //     println!("{:?}", graph[i]);
+    // }
 
     let ans: String = result
         .iter()
         .skip(1)
-        .map(|i| i.to_string())
+        .map(|i| {
+            if i == &usize::MAX {
+                "INF".to_string()
+            } else {
+                i.to_string()
+            }
+        })
         .collect::<Vec<String>>()
         .join("\n");
 
