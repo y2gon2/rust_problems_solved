@@ -1,12 +1,8 @@
-use std::error::Error;
-use std::fs::File;
-use std::io::Write;
+use std::collections::BTreeMap;
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let _g = File::open("hello.txt")?;
-    let mut write_buf = std::io::BufWriter::new(std::io::stdout().lock());
-    let a = "abc".to_string();
+fn main() {
+    let mut btree  = BTreeMap::<usize, usize>::new();
+    btree.insert(10 , 10);
+    btree.insert(1, 1);
 
-    writeln!(write_buf, "{}", a)?;
-    Ok(())
 }

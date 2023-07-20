@@ -7,8 +7,20 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "dij02_4485"
+path = "graph/dij02_4485.rs"
+
+[[example]]
+name = "1753"
+path = "not_my_code/1753.rs"
+
+[[example]]
+name = "sort01_10814"
+path = "sorting/sort01_10814.rs"
+
+[[example]]
 name = "gra06_1753"
-path = "graph/gra06_1753.rs"
+path = "graph/dij01_1753.rs"
 
 [[example]]
 name = "sim04_14500"
