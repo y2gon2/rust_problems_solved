@@ -1,8 +1,7 @@
 //! https://www.acmicpc.net/problem/4485
 //! 녹색 옷 입은 애가 젤다지?
-//! 
 
-use std::io::{stdin, stdout, Read};
+use std::io::{stdin, Read};
 use std::error::Error;
 use std::str::SplitAsciiWhitespace;
 use std::num::ParseIntError;
@@ -10,18 +9,20 @@ use std::collections::BinaryHeap;
 use std::cmp::{Ord, PartialOrd, Ordering};
 use std::fmt::Write;
 
+const DIRECTIONS: [(i32, i32); 4] = [(0, 1), (1, 0), (0, -1), (-1, 0)];
+
 #[derive(Eq, PartialEq, Debug)]
-struct QueueItem(usize, usize, u16);
+struct QueueItem(i32, i32, u16);
 
 impl PartialOrd for QueueItem {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.2.cmp(&other.2))
+        Some(other.2.cmp(&self.2))
     }
 }
 
 impl Ord for QueueItem {
     fn cmp(&self, other: &Self) -> Ordering {
-        self.2.cmp(&other.2)
+        other.2.cmp(&self.2)
     }   
 }
 
@@ -33,24 +34,30 @@ fn dijkstra(n: usize, matrix: Vec<Vec<u16>>) -> u16 {
     dij_matrix[0][0] = matrix[0][0];
 
     while let Some(QueueItem(cy, cx, weight)) = priority_queue.pop() {
-        let y = cy + 1;
-        if y < n {
-            let sum = dij_matrix[cy][cx] + matrix[y][cx];
-            if sum < dij_matrix[y][cx] { 
-                dij_matrix[y][cx] = sum; 
-                priority_queue.push(QueueItem(y, cx, sum));
-            }
+        // println!("{:?}", priority_queue);
+        if cy as usize == n - 1 && cx as usize == n - 1 { 
+            // for i in 0..n {
+            //     println!("{:?}", dij_matrix[i]);
+            // }
+            // println!("---------------------------");
 
+            return dij_matrix[n - 1][n - 1]; 
         }
+        
+        for (dy, dx) in DIRECTIONS {
+            let iy = cy + dy;
+            let ix = cx + dx;
 
-        let x = cx + 1;
-        if x < n {
-            let sum = dij_matrix[cy][cx] + matrix[cy][x];
-            if sum < dij_matrix[cy][x] { 
-                dij_matrix[cy][x] = sum; 
-                priority_queue.push(QueueItem(cy, x, sum));
+            if iy >= 0 && ix >= 0 && iy < n as i32 && ix < n as i32 {
+                let y = iy as usize;
+                let x = ix as usize;
+
+                let sum = weight + matrix[y][x];
+                if dij_matrix[y][x] > sum { 
+                    dij_matrix[y][x] = sum; 
+                    priority_queue.push(QueueItem(iy, ix, sum));
+                }
             }
-
         }
     }
 
@@ -80,11 +87,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     let _ = stdin().lock().read_to_string(&mut buf);
     let mut input = buf.split_ascii_whitespace();
 
-    let times = get_usize(&mut input)?;
-    for _ in 0..times {
-        let n = get_usize(&mut input)?;
+    let mut n = get_usize(&mut input)?;
+    let mut cnt = 1u8;
+    while n != 0 {
         let matrix = get_matrix(n, &mut input)?;
-        writeln!(output, "{}", dijkstra(n, matrix))?;
+        writeln!(output, "Problem {}: {}", cnt, dijkstra(n, matrix))?;
+        
+        cnt += 1;
+        n = get_usize(&mut input)?;
     }
     println!("{}", output);
     Ok(())
