@@ -5,7 +5,7 @@
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
 use std::collections::BinaryHeap;
-use std::cmp::{Ord, Ordering, PartialOrd, max};
+use std::cmp::{Ord, Ordering, PartialOrd};
 
 #[derive(Debug, Eq, PartialEq)]
 struct QueueItem(usize, usize); // next, weight
@@ -22,7 +22,7 @@ impl Ord for QueueItem {
     }
 }
 
-fn get_input() -> Result<(usize, usize, Vec<Vec<(usize, usize)>>), Box<dyn Error>> {
+fn get_input() -> Result<(usize, usize, Vec<Vec<(usize, usize)>>, Vec<Vec<(usize, usize)>>), Box<dyn Error>> {
     let mut buf = String::new();
     let _ = stdin().lock().read_to_string(&mut buf);
     let mut input = buf.split_ascii_whitespace();
@@ -32,19 +32,22 @@ fn get_input() -> Result<(usize, usize, Vec<Vec<(usize, usize)>>), Box<dyn Error
         .parse::<usize>();
 
     let (n, m, start) = (get_num()?, get_num()?, get_num()?);
-    let mut graph = vec![vec![]; n + 1];
+    let mut graph_forward = vec![vec![]; n + 1];
+    let mut graph_backward = vec![vec![];  n + 1];
+
     for _ in 0..m {
-        graph[get_num()?].push((get_num()?, get_num()?));
+        let (from, to, weight) = (get_num()?, get_num()?, get_num()?);
+        graph_forward[from].push((to, weight));
+        graph_backward[to].push((from, weight));
     }
 
-    Ok((n, start, graph))
+    Ok((n, start, graph_forward, graph_backward))
 }
 
-fn go_dijkstra(n:usize, start: usize, graph: &Vec<Vec<(usize, usize)>>, distances: &mut Vec<usize>) {   
+fn dijkstra(start: usize, graph: &Vec<Vec<(usize, usize)>>, distances: &mut Vec<usize>) {   
     let mut priority_queue = BinaryHeap::<QueueItem>::new();
     priority_queue.push(QueueItem(start, 0));
-    distances[start] = 0;
-    
+
     while let Some(QueueItem(cur, acc)) = priority_queue.pop() {
         for (next, weight) in graph[cur].iter() {
             let sum = acc + *weight;
@@ -53,35 +56,35 @@ fn go_dijkstra(n:usize, start: usize, graph: &Vec<Vec<(usize, usize)>>, distance
             distances[*next] = sum;
             priority_queue.push(QueueItem(*next, sum));
         }
-    }
-}
-
-fn come_dijkstra(n:usize, from: usize, to: usize, graph: &Vec<Vec<(usize, usize)>>, distances: &mut Vec<usize>)
-{
-
-}
+    }}
 
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut result = 0usize;
     let mut output = stdout().lock();
 
-    let (n, start, graph) = get_input()?;
+    let (
+        n, 
+        start, 
+        graph_forward, 
+        graph_backward
+    ) = get_input()?;
+
     let mut distances_go = vec![usize::MAX; n + 1];
     let mut distances_come = vec![usize::MAX; n + 1];
+
+    distances_go[start] = 0;
     distances_come[start] = 0;
+
+    dijkstra(start, &graph_forward, &mut distances_go);
+    dijkstra(start, &graph_backward, &mut distances_come);
     
-    go_dijkstra(n, start, &graph, &mut distances_go);
-
-    for i in 1..=n {
-        if i == start { continue; }
-        come_dijkstra(n, i, to, &graph, &mut distances_come);
-    }
-
-    for i in 1..=n {
-        let d = distances_go[i] + distances_come[i];
-        result = max(result, d);
-    }
+    let result = distances_go
+        .into_iter()
+        .skip(1)
+        .zip(distances_come.into_iter().skip(1))
+        .map(|(g, c)| g + c)
+        .max()
+        .unwrap();
 
     writeln!(output, "{}", result)?;
     Ok(())
