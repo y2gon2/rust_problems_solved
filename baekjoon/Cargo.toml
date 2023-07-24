@@ -7,6 +7,18 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
+name = "dij06_1504"
+path = "graph/dij06_1504.rs"
+
+[[example]]
+name = "acc09_11659"
+path = "prefix_sum/acc09_11659.rs"
+
+[[example]]
+name = "dij05_9370"
+path = "graph/dij05_9370.rs"
+
+[[example]]
 name = "dij04_11779"
 path = "graph/dij04_11779.rs"
 
