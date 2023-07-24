@@ -10,8 +10,10 @@ use std::cmp::{Ord, Ordering, PartialOrd};
 use std::str::SplitAsciiWhitespace;
 use std::num::ParseIntError;
 
+const LIMIT: usize = (usize::MAX / 3) - 1;
+
 #[derive(Debug, Eq, PartialEq)]
-struct QueueItem(usize, usize, Vec<usize>); // next, weigth, route
+struct QueueItem(usize, usize); // next, weigth
 
 impl PartialOrd for QueueItem {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
@@ -64,17 +66,13 @@ impl Target {
 struct Tailing {
     target: Target,
     graph: Vec<Vec<(usize, usize)>>,
-    priority_queue: BinaryHeap<QueueItem>,
-    shortcuts: Vec<usize>,
 }
 
 impl Tailing {
-    fn new(target: Target, graph: Vec<Vec<(usize, usize)>>, shortcuts: Vec<usize>) -> Self {
+    fn new(target: Target, graph: Vec<Vec<(usize, usize)>>) -> Self {
         Self {
             target,
             graph,
-            priority_queue: BinaryHeap::<QueueItem>::new(),
-            shortcuts,
         }
     }
 
@@ -83,7 +81,6 @@ impl Tailing {
         let m = get_num(buf_iter)?;
         let t = get_num(buf_iter)?;
         let start = get_num(buf_iter)?;
-        let shortcuts = vec![usize::MAX; n + 1];
         let in_the_middle: (usize, usize) = (get_num(buf_iter)?, get_num(buf_iter)?);
         
         let mut graph = vec![vec![]; n + 1];
@@ -107,42 +104,54 @@ impl Tailing {
             expectation, 
         );
 
-        Ok((Self::new(target, graph, shortcuts)))
+        Ok((Self::new(target, graph)))
     }
 
-    fn find_destination(&mut self) {
-        self.shortcuts[self.target.start] = 0;
-        self.priority_queue.push(QueueItem(self.target.start, 0, vec![self.target.start]));
+    fn dijkstra(&mut self, from: usize, to: usize) -> usize {
+        let mut shortcuts = vec![LIMIT; self.graph.len() + 2];
+        shortcuts[from] = 0;
 
-        while let Some(QueueItem(cur, acc, route)) = self.priority_queue.pop() {
-            if self.target.expectation.contains(&cur) {
-                for i in 1..route.len() {
-                    if (route[i - 1] == self.target.in_the_middle.0 
-                    && route[i] == self.target.in_the_middle.1)
-                    || (route[i] == self.target.in_the_middle.0 
-                    && route[i - 1] == self.target.in_the_middle.1) {
-                        if self.target.destinations.contains(&cur) { continue; }
-                        self.target.destinations.push(cur);
+        let mut priority_queue = BinaryHeap::new();
+        priority_queue.push(QueueItem(from, 0));
 
-                        // println!("route:{:?}", &route);
-                        // println!("dest :{:?}", self.target.destinations);
-                    }
-                }
-            }
+        while let Some(QueueItem(cur, acc)) = priority_queue.pop() {
+            if cur == to { return shortcuts[cur] }
             
             for (next, weight) in &self.graph[cur] {
                 let sum = acc + *weight;
 
-                if sum > self.shortcuts[*next] { continue; }
+                if sum > shortcuts[*next] { continue; }
 
-                self.shortcuts[*next] = sum;
-                let mut new_route = route.clone();
-                new_route.push(*next);
-
-                self.priority_queue.push(QueueItem(*next, sum, new_route));
+                shortcuts[*next] = sum;
+                priority_queue.push(QueueItem(*next, sum));
             }
         }
+        shortcuts[to]
+    }
 
+    fn find_destination(&mut self) {
+        let ex = self.target.expectation.clone();
+
+        for e in ex.iter() {
+            // 출발지에서 예상 목적지까지 한번에 갔을 때 최단 거리
+            let s_to_t = self.dijkstra(self.target.in_the_middle.0, *e);
+
+            // start -> A or B
+            let s_to_a = self.dijkstra(self.target.start, self.target.in_the_middle.0);
+            let s_to_b = self.dijkstra(self.target.start, self.target.in_the_middle.1);
+            
+            // A <-> B
+            let a_to_b = self.dijkstra(self.target.in_the_middle.0, self.target.in_the_middle.1);
+
+            // A or B -> target
+            let b_to_e = self.dijkstra(self.target.in_the_middle.1, *e);
+            let a_to_e = self.dijkstra(self.target.in_the_middle.0, *e);
+
+            println!("[{e}] {s_to_t} : [{}] {s_to_a} -> [{}] {a_to_b} -> [{}] {b_to_e}  / [{}] {s_to_b} -> [{}] {a_to_b} -> [{}] {a_to_e}", self.target.start, self.target.in_the_middle.0, self.target.in_the_middle.1, self.target.start, self.target.in_the_middle.1, self.target.in_the_middle.0);
+            if s_to_t == (s_to_a + a_to_b + b_to_e) || s_to_t == (s_to_b + a_to_b + a_to_e) {
+                self.target.destinations.push(*e);
+            }
+        }
     }
 }
 
