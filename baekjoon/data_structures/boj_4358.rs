@@ -3,7 +3,7 @@
 //! 
 //! 
 
-use std::io::{stdin, BufReader, BufRead};
+use std::io::{stdin, BufReader, Read};
 use std::fmt::Write;
 use std::error::Error;
 use std::collections::BTreeMap;
