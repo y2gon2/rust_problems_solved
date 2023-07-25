@@ -31,16 +31,16 @@ impl Ord for QueueItem {
 #[derive(Debug)]
 struct Target {
     start: usize,
-    expectation: Vec<usize>,
-    destinations: Vec<usize>,
+    expectation: Vec<u16>,
+    destinations: Vec<u16>,
 }
 
 impl Target {
     fn new() -> Self {
         Self {
             start: 0,
-            expectation: Vec::<usize>::new(),
-            destinations: Vec::<usize>::new(),
+            expectation: Vec::<u16>::new(),
+            destinations: Vec::<u16>::new(),
         }
     }
 
@@ -61,7 +61,7 @@ impl Target {
 struct Tailing {
     target: Target,
     in_the_middle: (usize, usize),
-    graph: Vec<Vec<(usize, usize)>>,
+    graph: Vec<Vec<(u16, u16)>>,
 }
 
 impl Tailing {
@@ -69,7 +69,7 @@ impl Tailing {
         Self {
             target: Target::new(),
             in_the_middle: (0, 0),
-            graph: Vec::<Vec<(usize, usize)>>::new(),
+            graph: Vec::<Vec<(u16, u16)>>::new(),
         }
     }
 
@@ -79,20 +79,20 @@ impl Tailing {
         
         let mut graph = vec![vec![]; n + 1];
         for _ in 0..m {
-            let (from, to, weight) = get_nums()?;
+            let (from, to, weight) = get_nums16()?;
 
-            graph[from].push((to, weight));
-            graph[to].push((from, weight));
+            graph[from as usize].push((to, weight));
+            graph[to as usize].push((from, weight));
         }
 
-        let mut expectation = vec![0usize; t];
+        let mut expectation = vec![0u16; t];
         for i in 0..t {
             expectation[i] = get_num()?;
         }
 
         self.target.start = start;
         self.target.expectation = expectation;
-        self.target.destinations = Vec::<usize>::new();
+        self.target.destinations = Vec::<u16>::new();
         self.in_the_middle = (middle1, middle2);
         self.graph = graph;
 
@@ -108,12 +108,12 @@ impl Tailing {
 
         while let Some(QueueItem(cur, acc)) = priority_queue.pop() {            
             for (next, weight) in &self.graph[cur] {
-                let sum = acc + *weight;
+                let sum = acc + *weight as usize;
 
-                if sum > shortcuts[*next] { continue; }
+                if sum > shortcuts[*next as usize] { continue; }
 
-                shortcuts[*next] = sum;
-                priority_queue.push(QueueItem(*next, sum));
+                shortcuts[*next as usize] = sum;
+                priority_queue.push(QueueItem(*next as usize, sum));
             }
         }
         shortcuts
@@ -128,18 +128,18 @@ impl Tailing {
             // println!("from_start: {:?}", from_start);
 
             // 목적지에서 모든 위치까지 최단 거리
-            let from_e = self.dijkstra(*e);
+            let from_e = self.dijkstra(*e as usize);
             // println!("from_e: {:?}", from_e);
 
             let mut smelling_cross_weight: usize = 0usize;
             for (middle2, weight) in self.graph[self.in_the_middle.0].iter() {
-                if middle2 == &self.in_the_middle.1 {
-                    smelling_cross_weight = *weight;
+                if *middle2 as usize == *&self.in_the_middle.1 {
+                    smelling_cross_weight = *weight as usize;
                 }
             }
 
-            if from_start[*e] == (from_start[self.in_the_middle.0] + smelling_cross_weight + from_e[self.in_the_middle.1]) 
-            || from_start[*e] == (from_start[self.in_the_middle.1] + smelling_cross_weight + from_e[self.in_the_middle.0]) {
+            if from_start[*e as usize] == (from_start[self.in_the_middle.0] + smelling_cross_weight + from_e[self.in_the_middle.1]) 
+            || from_start[*e as usize] == (from_start[self.in_the_middle.1] + smelling_cross_weight + from_e[self.in_the_middle.0]) {
                 self.target.destinations.push(*e);
             }
         }
@@ -148,15 +148,15 @@ impl Tailing {
     fn clear(&mut self) {
         self.target =  Target::new();
         self.in_the_middle = (0, 0);
-        self.graph = Vec::<Vec<(usize, usize)>>::new();
+        self.graph = Vec::<Vec<(u16, u16)>>::new();
     } 
 }
 
-fn get_num() -> Result<usize, ParseIntError> {
+fn get_num() -> Result<u16, ParseIntError> {
     let mut buf = String::new();
     let _ = stdin().read_line(&mut buf);
     
-    buf.trim().parse::<usize>()
+    buf.trim().parse::<u16>()
 }
 
 fn get_nums() -> Result<(usize, usize, usize), ParseIntError> {
@@ -168,6 +168,19 @@ fn get_nums() -> Result<(usize, usize, usize), ParseIntError> {
         .next()
         .unwrap()
         .parse::<usize>();
+
+    Ok((get_n()?, get_n()?, get_n()?))
+}
+
+fn get_nums16() -> Result<(u16, u16, u16), ParseIntError> {
+    let mut buf = String::new();
+    let _ = stdin().read_line(&mut buf);
+    
+    let mut nums_iter = buf.split_ascii_whitespace();
+    let mut get_n = || nums_iter
+        .next()
+        .unwrap()
+        .parse::<u16>();
 
     Ok((get_n()?, get_n()?, get_n()?))
 }
