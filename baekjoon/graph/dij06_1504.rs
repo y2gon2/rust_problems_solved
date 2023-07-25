@@ -3,10 +3,8 @@
 
 
 use std::io::{stdin, stdout, Read, Write};
-use std::error::Error;
 use std::collections::BinaryHeap;
 use std::cmp::{min, Ord, Ordering, PartialOrd};
-use std::num::ParseIntError;
 
 const LIMIT: usize = usize::MAX / 3 - 1;
 
@@ -41,31 +39,30 @@ impl Route {
         }
     }
 
-    fn create_from_input() -> Result<Self, ParseIntError> {
+    fn create_from_input() -> Self {
         let mut buf = String::new();
         let _ = stdin().read_to_string(&mut buf);
         let mut input = buf.split_ascii_whitespace();
         let mut get_num = || input
             .next()
             .unwrap()
-            .parse::<usize>();
+            .parse::<usize>()
+            .unwrap();
 
-        let n = get_num()?;
-        let m = get_num()?;
+        let n = get_num();
+        let m = get_num();
         let mut graph = vec![vec![]; n + 1];
 
         for _ in 0..m {
-            let (from, to, weight) = (get_num()?, get_num()?, get_num()?);
+            let (from, to, weight) = (get_num(), get_num(), get_num());
 
             graph[from].push((to, weight));
             graph[to].push((from, weight));            
         }
         
-        let waypoints: (usize, usize) = (get_num()?, get_num()?);
+        let waypoints: (usize, usize) = (get_num(), get_num());
         
-        let route = Route::new(n, waypoints, graph);
-        // println!("{:?}", &route);
-        Ok(route)
+        Route::new(n, waypoints, graph)
     }
 
     fn dijkstra(&mut self, start: usize, target: usize) -> usize{
@@ -110,17 +107,15 @@ impl Route {
 }
 
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() {
     let mut output = stdout();
-    let mut route = Route::create_from_input()?;
+    let mut route = Route::create_from_input();
 
     let result = route.measurement();
 
     if result >= LIMIT {
-        writeln!(output, "-1")?;
+        writeln!(output, "-1").unwrap();
     } else {
-        writeln!(output, "{}", result)?;
+        writeln!(output, "{}", result).unwrap();
     }
-
-    Ok(())
 }

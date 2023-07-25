@@ -24,7 +24,7 @@ fn main() {
     }
 
     for _ in 0..m {
-        let (from, to) = (get_num(), get_num());
+        let (_from, to) = (get_num(), get_num());
         let result = nums[to] - nums[get_num() - 1];
         writeln!(output, "{}", result).unwrap();
     }
