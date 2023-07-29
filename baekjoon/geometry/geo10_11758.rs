@@ -6,7 +6,6 @@ use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut output = stdout();
-    let mut result = 0i8;
 
     let mut buf = String::new();
     let _ = stdin().read_to_string(&mut buf);
@@ -23,13 +22,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     let double_s = (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1);
 
     if double_s == 0{
-        result = 0;
+        writeln!(output, "0")?;
     } else if  double_s > 0  {
-        result = 1;
+        writeln!(output, "1")?;
     } else {
-        result = -1;
+        writeln!(output, "-1")?;
     }
-
-    writeln!(output, "{}", result)?;
     Ok(())
 }
