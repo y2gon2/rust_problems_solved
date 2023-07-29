@@ -4,14 +4,6 @@
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
 
-#[derive(Eq, PartialEq)]
-enum Quadrant4 {
-    One,
-    Two,
-    Three,
-    Four,
-}
-
 fn main() -> Result<(), Box<dyn Error>> {
     let mut output = stdout();
     let mut result = 0i8;
@@ -28,19 +20,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     let (x2, y2) = (get_num()?, get_num()?);
     let (x3, y3) = (get_num()?, get_num()?);
 
-    let (hor1, hor2) = (x2 - x1, x3 - x2);
-    let (ver1, ver2) = (y2 - y1, y3 - y2);
+    let double_s = (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1);
 
-    if hor1 == 0 && hor2 == 0 {
+    if double_s == 0{
         result = 0;
-    } else if (hor1 == 0 && hor2 > 0) || (hor1 > 0 && hor2 == 0) {
+    } else if  double_s > 0  {
         result = 1;
-    } else if  (hor1 == 0 && hor2 < 0) || (hor1 < 0 && hor2 == 0) {
-        result = -1;
     } else {
-        let (gra1, gra2) = (ver1 as f32 / hor1 as f32, ver2 as f32 / hor2 as f32);
-
-        
+        result = -1;
     }
 
     writeln!(output, "{}", result)?;
