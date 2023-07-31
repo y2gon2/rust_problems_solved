@@ -7,12 +7,20 @@ edition = "2021"
 itertools = "0.10.5"
 
 [[example]]
-name = "geo11_2166"
-path = "geometry/geo11_2166.rs"
+name = "dot03_12781"
+path = "geometry/dot03_12781.rs"
 
 [[example]]
-name = "geo10_11758"
-path = "geometry/geo10_11758.rs"
+name = "geo10_1027"
+path = "geometry/geo10_1027.rs"
+
+[[example]]
+name = "dot02_2166"
+path = "geometry/dot02_2166.rs"
+
+[[example]]
+name = "dot01_11758"
+path = "geometry/dot01_11758.rs"
 
 [[example]]
 name = "geo09_1069"
