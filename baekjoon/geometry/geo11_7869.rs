@@ -6,6 +6,7 @@ use std::error::Error;
 use std::f32::consts::PI;
 
 fn main() -> Result<(), Box<dyn Error>> {
+    #[allow(unused_assignments)]
     let mut result = 0.0;
     let mut output = stdout();
 
