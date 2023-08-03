@@ -1,7 +1,6 @@
 //! https://www.acmicpc.net/problem/6439
 //! 교차
 
-use std::borrow::BorrowMut;
 use std::io::{stdin, Read};
 use std::fmt::Write;
 use std::error::Error;
@@ -62,7 +61,7 @@ fn is_cross(s: S, l: L) -> bool {
         && l.start.x <= s.top_right.x && l.start.y <= s.top_right.y) 
     || (l.end.x >= s.btn_left.x && l.end.y >= s.btn_left.x 
         && l.end.x <= s.top_right.x && l.end.y <= s.top_right.y)  {
-        // println!("000");
+        println!("000");
         return true
     }
 
@@ -73,7 +72,7 @@ fn is_cross(s: S, l: L) -> bool {
 
     // 선분의 양 끝점이 모두 직사각형의 각 변의 한쪽 밖에 몰려 있는 경우 false
     if mn_x > s.top_right.x || mn_y > s.top_right.y || mx_x < s.btn_left.x || mx_y < s.btn_left.y {
-        // println!("1111");
+        println!("1111");
         return false
     } 
 
@@ -91,13 +90,13 @@ fn is_cross(s: S, l: L) -> bool {
     let c2_to_l = ccw(s.btn_left.x, s.top_right.x, l.start.x, s.btn_left.y, s.top_right.y, l.start.y) 
         * ccw(s.btn_left.x, s.top_right.x, l.end.x, s.btn_left.y, s.top_right.y, l.end.y);
 
-    // println!(" l_to_c1:{}  c1_to_l:{},  l_to_c2:{}, c2_to_l:{}",  l_to_c1, c1_to_l, l_to_c2, c2_to_l);        
+    println!(" l_to_c1:{}  c1_to_l:{},  l_to_c2:{}, c2_to_l:{}",  l_to_c1, c1_to_l, l_to_c2, c2_to_l);        
     if (l_to_c1 <= 0 && c1_to_l <= 0) || (l_to_c2 <= 0 && c2_to_l <= 0) {
-        // println!("2222");
+        println!("2222");
         return true
     } 
 
-    // println!("333");
+    println!("333");
     false
 }
 
@@ -140,12 +139,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
 
         if is_cross(s, l) {
-            writeln!(result, "T")?;
+            result += "T\n";
         } else {
-            writeln!(result, "F")?;
+            result += "F\n";
         }
     }
 
-    println!("{result}");
+    print!("{result}");
     Ok(())
 }
