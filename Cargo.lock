@@ -3,10 +3,6 @@
 version = 3
 
 [[package]]
-name = "LeetCode"
-version = "0.1.0"
-
-[[package]]
 name = "baekjoon"
 version = "0.1.0"
 dependencies = [
@@ -27,3 +23,7 @@ checksum = "b0fd2260e829bddf4cb6ea802289de2f86d6a7a690192fbe91b3f46e0f2c8473"
 dependencies = [
  "either",
 ]
+
+[[package]]
+name = "leet_code"
+version = "0.1.0"
