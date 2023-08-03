@@ -96,12 +96,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     for i in 0..n {
         for j in 0..m {
             visited[i][j] = true;
-            if i > 0 { visited[i - 1][j] == true; }
-            if j > 0 { visited[i][j - 1] == true; }
+
             dfs(i as i32, j as i32, n, m, &matrix, &mut visited, &mut result, &mut 1, &mut matrix[i][j].clone());
+            
             visited[i][j] = false;
-            if i > 0 { visited[i - 1][j] == false; }
-            if j > 0 { visited[i][j - 1] == false; }
             vowel(i, j, n, m, &matrix, &mut result);
         }
     }
