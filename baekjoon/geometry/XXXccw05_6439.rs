@@ -48,42 +48,56 @@ impl L {
     }
 }
 
-fn ccw(l: &L, x3: i32, y3: i32) -> i8 {
-    let result = ((l.end.x - l.start.x) * (y3 - l.start.y) - (x3 - l.start.x) * (l.end.y - l.start.y));
-    if result == 0 {
-        return 0
-    } else if result > 0 {
-        return 1
-    }else {
-        return -1
-    }
+fn ccw(x1: i32, x2: i32, x3: i32, y1: i32, y2: i32, y3: i32) -> i8 {
+    let result = (x3 - x1) * (y2 - y1) - (x2 - x1) * (y3 - y1);
+    
+    if result < 0 { return -1 } 
+    else if result == 0 { return 0 } 
+    else { return 1 }
 }
 
 fn is_cross(s: S, l: L) -> bool {
-    // 선분 끝점 중 한점이라도 사각형 내부에 들어 있는 경우 true
+    // 선분 끝점 중 한점이라도 사각형 내부 (경계선 포함)에 들어 있는 경우 true
     if (l.start.x >= s.btn_left.x && l.start.y >= s.btn_left.x 
         && l.start.x <= s.top_right.x && l.start.y <= s.top_right.y) 
     || (l.end.x >= s.btn_left.x && l.end.y >= s.btn_left.x 
         && l.end.x <= s.top_right.x && l.end.y <= s.top_right.y)  {
+        // println!("000");
         return true
     }
 
-    // 선분의 끝점 모두 사각형의 큰 값보다 크거나, 작은값보다 작은 쪽에 치우쳐 있는 경우 false
-    if (l.start.x < s.btn_left.x  && l.end.x < s.btn_left.x) 
-    || (l.start.y < s.btn_left.y && l.end.y < s.btn_left.y)
-    || (l.start.x > s.top_right.x && l.end.x > s.top_right.x)
-    || (l.start.y > s.top_right.y && l.end.y > s.top_right.y) {
+    let mx_x = l.start.x.max(l.end.x);
+    let mn_x = l.start.x.min(l.end.x);
+    let mx_y = l.start.y.max(l.end.y);
+    let mn_y = l.start.y.min(l.end.y);
+
+    // 선분의 양 끝점이 모두 직사각형의 각 변의 한쪽 밖에 몰려 있는 경우 false
+    if mn_x > s.top_right.x || mn_y > s.top_right.y || mx_x < s.btn_left.x || mx_y < s.btn_left.y {
+        // println!("1111");
         return false
-    }
+    } 
 
-    // 사각형을 기준으로 선분의 양 끝점이 나누어진 공간에 위치하는 경우
-    if (ccw(&l, s.btn_left.x, s.btn_left.y) * ccw(&l, s.btn_left.x, s.top_right.y)) < 0
-    || (ccw(&l, s.btn_left.x, s.top_right.y) * ccw(&l, s.top_right.x, s.top_right.y)) < 0
-    || (ccw(&l, s.top_right.x, s.top_right.y) * ccw(&l, s.top_right.x, s.btn_left.y)) < 0
-    || (ccw(&l, s.top_right.x, s.btn_left.y) * ccw(&l, s.btn_left.x, s.btn_left.y)) < 0 {
+    // 선분의 양 끝점 모두 직사각형 위 또는 내부에 존재하지 않는 경우
+    // c1: \ 방향 대각선, c2: / 방향 대각선
+    let l_to_c1 = ccw(l.start.x, l.end.x, s.btn_left.x, l.start.y, l.end.y, s.top_right.y) 
+        * ccw(l.start.x, l.end.x, s.top_right.x, l.start.y, l.end.y, s.btn_left.y);
+
+    let c1_to_l = ccw(s.btn_left.x, s.top_right.x, l.start.x, s.top_right.y, s.btn_left.y, l.start.y) 
+        * ccw(s.btn_left.x, s.top_right.x, l.end.x, s.top_right.y, s.btn_left.y, l.end.y);
+
+    let l_to_c2 = ccw(l.start.x, l.end.x, s.btn_left.x, l.start.y, l.end.y, s.btn_left.y) 
+        * ccw(l.start.x, l.end.x, s.top_right.x, l.start.y, l.end.y, s.top_right.y);
+    
+    let c2_to_l = ccw(s.btn_left.x, s.top_right.x, l.start.x, s.btn_left.y, s.top_right.y, l.start.y) 
+        * ccw(s.btn_left.x, s.top_right.x, l.end.x, s.btn_left.y, s.top_right.y, l.end.y);
+
+    // println!(" l_to_c1:{}  c1_to_l:{},  l_to_c2:{}, c2_to_l:{}",  l_to_c1, c1_to_l, l_to_c2, c2_to_l);        
+    if (l_to_c1 <= 0 && c1_to_l <= 0) || (l_to_c2 <= 0 && c2_to_l <= 0) {
+        // println!("2222");
         return true
-    }
+    } 
 
+    // println!("333");
     false
 }
 
