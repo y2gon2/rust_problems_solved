@@ -29,9 +29,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
     
-    for i in 1..=n {
-        println!("{:?}", map[i]);
-    }
+    // for i in 1..=n {
+    //     println!("{:?}", map[i]);
+    // }
 
     let mut from = get_n()?;
     let mut to = get_n()?;
@@ -40,7 +40,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         if map[from as usize][to as usize] {
             from = to;
             to = get_n()?;
-            println!("map[{}][{}]: {}", from, to, map[from as usize][to as usize]);
+            // println!("map[{}][{}]: {}", from, to, map[from as usize][to as usize]);
             result = true;
         } else {
             result =false;
