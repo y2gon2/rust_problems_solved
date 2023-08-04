@@ -3,8 +3,9 @@ name = "baekjoon"
 version = "0.1.0"
 edition = "2021"
 
-[dependencies]
-itertools = "0.10.5"
+[[example]]
+name = "dis02_1976"
+path = "set/dis02_1976.rs"
 
 [[example]]
 name = "dis01_1717"
