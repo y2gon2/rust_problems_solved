@@ -4,10 +4,26 @@
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
 
+fn union(parents:&mut Vec<usize>, n1: usize, n2: usize) {
+    let n1_root = find(parents, n1);
+    let n2_root = find(parents, n2);
+
+    if n1_root < n2_root {
+        parents[n2_root] = n1_root;
+    } else {
+        parents[n1_root] = n2_root;
+    }
+}
+
+fn find(parents:&mut Vec<usize>, x: usize) -> usize {
+    if parents[x] != x {
+        parents[x] = find(parents, parents[x]);
+    }
+    return parents[x]
+}
+
 fn main() -> Result<(), Box<dyn Error>> {
     let mut output = stdout();
-    let mut result = false;
-
     let mut buf = String::new();
     let _ = stdin().read_to_string(&mut buf);
 
@@ -15,43 +31,29 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut get_n = || input
         .next()
         .unwrap()
-        .parse::<u16>();
+        .parse::<usize>();
 
-    let n = get_n()? as usize;
+    let n = get_n()?;
     let m = get_n()?;
-    let mut map = vec![vec![false; n + 1]; n + 1];
+    let mut parents: Vec<usize> = (0..=n).collect();
     
     for i in 1..=n {
         for j in 1..=n {
             if get_n()? == 1 {
-                map[i][j] = true;
+                union(&mut parents, i, j);
             }
         }
     }
     
-    // for i in 1..=n {
-    //     println!("{:?}", map[i]);
-    // }
+    let start_parent = parents[get_n()?];
 
-    let mut from = get_n()?;
-    let mut to = get_n()?;
-
-    for i in 2..m {
-        if map[from as usize][to as usize] {
-            from = to;
-            to = get_n()?;
-            // println!("map[{}][{}]: {}", from, to, map[from as usize][to as usize]);
-            result = true;
-        } else {
-            result =false;
-            break;
+    for _ in 1..m {
+        if parents[get_n()?] != start_parent {
+            writeln!(output, "NO")?;
+            return Ok(())
         }
     }
 
-    match result {
-        true => writeln!(output, "YES")?,
-        false => writeln!(output, "NO")?,
-    }
-    
+    writeln!(output, "YES")?;
     Ok(())
 }
