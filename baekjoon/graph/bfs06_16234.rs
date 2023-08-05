@@ -112,7 +112,6 @@ fn union(lands:&mut Vec<Vec<usize>>, info: Vec<usize>) -> Result<usize, Box<dyn 
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut result = String::new();
     let mut output = stdout().lock();
 
     let mut buf = String::new();
