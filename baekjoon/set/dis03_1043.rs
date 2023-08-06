@@ -59,7 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let length = get_n()?;
         parties[i] = get_n()?;
 
-        for k in 0..length - 1 {
+        for _ in 0..length - 1 {
             union(&mut parents, &truth, parties[i], get_n()?);
         }
     }
