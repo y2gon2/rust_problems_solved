@@ -4,16 +4,20 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "dis04_20040"
+path = "graph/dis04_20040.rs"
+
+[[example]]
 name = "dis03_1043"
-path = "set/dis03_1043.rs"
+path = "graph/dis03_1043.rs"
 
 [[example]]
 name = "dis02_1976"
-path = "set/dis02_1976.rs"
+path = "graph/dis02_1976.rs"
 
 [[example]]
 name = "dis01_1717"
-path = "set/dis01_1717.rs"
+path = "graph/dis01_1717.rs"
 
 [[example]]
 name = "geo14_3108"
