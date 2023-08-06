@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "dis03_1043"
+path = "set/dis03_1043.rs"
+
+[[example]]
 name = "dis02_1976"
 path = "set/dis02_1976.rs"
 
