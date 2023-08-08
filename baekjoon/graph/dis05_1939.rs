@@ -2,29 +2,29 @@
 //! 중량제한
 
 use std::io::{stdin, Read};
-use std::fmt::Write;
 use std::error::Error;
+use std::collections::VecDeque;
 
-fn union(parent: &mut Vec<(usize, usize)>, n1: usize, n2: usize, weight: usize) {
-    let (r1, w1) = find(parent, n1, weight);
-    let (r2, w2) = find(parent, n2, weight);
+fn find(graph: &Vec<Vec<(usize, usize)>>, start: usize, destination: usize, mid: usize) -> bool {
+    let mut queue = VecDeque::<usize>::new();
+    let mut visited = vec![false; graph.len() + 1];
 
-    let weight = w1.min(w2);
-    let root = r1.min(r2);
+    queue.push_back(start);
 
-    parent[n1] = (root, weight);
-    parent[n2] = (root, weight); 
-}
-
-fn find(parent:&mut Vec<(usize, usize)>, n: usize, weight: usize) -> (usize, usize) {
-    if parent[n].0 != n {
-        parent[n] = find(parent, parent[n].0, parent[n].1.min(weight));
+    while let Some(from) = queue.pop_front() {
+        if from == destination { return true }
+        
+        for (next, weight) in graph[from].iter() {
+            if visited[*next] || *weight < mid { continue; }
+            
+            queue.push_back(*next);
+            visited[*next] = true;
+        }
     }
-    return (parent[n].0, parent[n].1.min(weight))
+    false
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut rusult = 0usize;
     let mut buf = String::new();
     let _ = stdin().read_to_string(&mut buf);
 
@@ -36,18 +36,35 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let (n, m) = (get_n()?, get_n()?);
 
-    let mut parent = vec![(0usize, 0usize); n + 1];
-    for i in 0..=n {
-        parent[i].0 = i; 
+    let mut graph = vec![<Vec<(usize, usize)>>::new(); n + 1];
+    let mut max_w = 0usize;
+    let mut min_w = 0usize;
+
+    for i in 0..m {
+        let n1 = get_n()?;
+        let n2 = get_n()?;
+        let weight = get_n()?;
+
+        graph[n1].push((n2, weight));
+        graph[n2].push((n1, weight));
+
+        max_w = max_w.max(weight);
+        min_w = min_w.min(weight);
     }
 
-    for _ in 0..m {
-        union(&mut parent, get_n()?, get_n()?, get_n()?);
+    let start = get_n()?;
+    let destination = get_n()?;
+
+    while min_w <= max_w {
+        let mid = (min_w + max_w) / 2;
+
+        if find(&graph, start, destination, mid) {
+            min_w = mid + 1;
+        } else {
+            max_w = mid - 1;
+        }
     }
 
-    let _ = get_n()?;
-
-    println!("{}", find(&mut parent, get_n()?, 0).1);
-
+    println!("{}", max_w);
     Ok(())
 }
