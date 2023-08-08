@@ -1,31 +1,29 @@
 //! https://www.acmicpc.net/problem/20040
 //! 사이클 게임
 
-use std::io::{stdin, stdout, Read, Write};
+use std::io::{stdin, stdout, Write, Read};
 use std::error::Error;
 
-fn union(points: &mut Vec<usize>, p1: usize, p2: usize) {
-    let root_p1 = find(points, p1);
-    let root_p2 = find(points, p2);
+fn union(parent: &mut Vec<usize>, a: usize, b: usize) -> bool {
+    let parent_a = find(parent, a);
+    let parent_b = find(parent, b);
 
-    if root_p1 < root_p2 {
-        points[p2] = root_p2;
-    } else {
-        points[p1] = root_p2;
+    if parent_a == parent_b { true }
+    else {
+        parent[parent_a.max(parent_b)] = parent_a.min(parent_b);
+        false
     }
 }
 
-fn find(points: &mut Vec<usize>, p: usize) -> usize {
-    if points[p] != p {
-        points[p] = find(points, points[p]);
+fn find(parent: &mut Vec<usize>, mut a: usize) -> usize {
+    while parent[a] != a { 
+        a = parent[a];
     }
-    return points[p]
+    return a
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut result = String::new();
     let mut output = stdout();
-
     let mut buf = String::new();
     let _ = stdin().read_to_string(&mut buf);
 
@@ -36,7 +34,15 @@ fn main() -> Result<(), Box<dyn Error>> {
         .parse::<usize>();
 
     let (n, m) = (get_n()?, get_n()?);
-    let mut points: Vec<usize> = (0..=n).collect();
+    let mut parent: Vec<usize> = (0..n).collect();
 
+    for i in 1..=m {
+        if union(&mut parent, get_n()?, get_n()?) {
+            writeln!(output, "{}", i)?;
+            return Ok(())
+        }
+    }
+
+    writeln!(output, "0")?;
     Ok(())
 } 
