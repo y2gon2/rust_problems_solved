@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
-name = "dis05_1939"
-path = "graph/dis05_1939.rs"
+name = "bfs09_1939"
+path = "graph/bfs09_1939.rs"
 
 [[example]]
 name = "dis04_20040"
