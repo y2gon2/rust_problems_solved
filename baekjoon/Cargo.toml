@@ -4,6 +4,14 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "geo15_1051"
+path = "geometry/geo15_1051.rs"
+
+[[example]]
+name = "dis06_16724"
+path = "graph/dis06_16724.rs"
+
+[[example]]
 name = "dis05_10216"
 path = "graph/dis05_10216.rs"
 
