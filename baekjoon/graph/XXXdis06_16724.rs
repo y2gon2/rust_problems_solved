@@ -27,7 +27,7 @@ fn disjoint(
     mut sy: usize, 
     mut sx:usize,
     result: usize,
-) {
+) -> usize {
     loop {
         let mut y = sy;
         let mut x = sx;
@@ -42,10 +42,13 @@ fn disjoint(
 
         if parent[y][x] == usize::MAX {  
             parent[y][x] = result;
-    
-        } else if 
-    
-        parent[y][x] = result;
+            sy = y;
+            sx = x;
+        } else if parent[y][x] == result {
+            return
+        } else {
+            
+        }    
     }
 }
 
