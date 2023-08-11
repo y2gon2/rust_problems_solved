@@ -40,7 +40,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut max_w = 0usize;
     let mut min_w = 0usize;
 
-    for i in 0..m {
+    for _ in 0..m {
         let n1 = get_n()?;
         let n2 = get_n()?;
         let weight = get_n()?;
