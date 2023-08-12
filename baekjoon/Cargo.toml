@@ -4,6 +4,18 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "bru04_1057"
+path = "brute_force/bru04_1057.rs"
+
+[[example]]
+name = "bit01_1052"
+path = "bit_masking/bit01_1052.rs"
+
+[[example]]
+name = "bru03_1025"
+path = "brute_force/bru03_1025.rs"
+
+[[example]]
 name = "n03_1011"
 path = "math/n03_1011.rs"
 
