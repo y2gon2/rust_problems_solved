@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "sort02_1015"
+path = "sorting/sort02_1015.rs"
+
+[[example]]
 name = "bru04_1057"
 path = "brute_force/bru04_1057.rs"
 

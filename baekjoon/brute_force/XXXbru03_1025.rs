@@ -4,6 +4,7 @@
 
 use std::io::{stdin, stdout, Read, Write};
 use std::error::Error;
+use std::collections::HashSet;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut output = stdout();
@@ -29,33 +30,51 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     let num = n.max(m);
-    let result = -1i32;
+    let mut result = -1i32;
 
-    let mut perfect_sq: Vec<i32> = vec![0];
+    let mut perfect_sq = HashSet::<i32>::new();
     let mut cnt = 1i32;
     
     while cnt / 10 * num as i32 == 0 {
-        perfect_sq.push(cnt.pow(2));
+        perfect_sq.insert(cnt.pow(2));
         cnt += 1;
     }
-
-    let ver_step: Vec<usize> = (0..n - 1).collect();
-    let hor_step: Vec<usize> = (0..m - 1).collect();
 
     for i in 0..n {
         for j in 0..m {
             let mut number = Vec::<u8>::new();
             for y_step in 0..n - 1 {
-                if i + y_step >= n { break; }
                 for x_step in 0..m - 1 {
-                    if j + x_step >= m { break; }
+                    let mut y =i + y_step;
+                    let mut x =  j + x_step;
+                    while y < n && x < m {
+                        println!("(y, x) = ({y}, {x})");
+                        number.push(matrix[y][x]);
 
-                    
+                        println!("number: {:?}", &number);
+                        if !number.is_empty() {
+                            let num1_str: String = number.iter().map(|u| u.to_string()).collect();
+                            let num1: i32 = num1_str.parse::<i32>()?;
+                            if perfect_sq.contains(&num1) {
+                                result = result.max(num1);
+                            }
+                            
+                            let num2_str: String = number.iter().rev().map(|u| u.to_string()).collect();
+                            let num2: i32 = num2_str.parse::<i32>()?;
+                            if perfect_sq.contains(&num2) {
+                                result = result.max(num2);
+                            }
+                            println!("num1: {num1}  num2: {num2}");
+                        }
+    
+                        if y_step == 0 && x_step == 0 { break; } 
+                        y += y_step;
+                        x += x_step;
+                    }
                 }
             }
         }
     }
-
 
     writeln!(output, "{}", result)?;
     Ok(())
