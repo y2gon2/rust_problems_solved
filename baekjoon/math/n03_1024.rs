@@ -9,24 +9,23 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut buf = String::new();
     let _ = stdin().read_to_string(&mut buf);
 
-    let info: Vec<i64> = buf
-        .split_ascii_whitespace()
-        .map(|s| s.parse::<i64>())
-        .collect::<Result<_, _>>()
-        .map_err(|e| e)?;
-
-    let n = info[0];
-    let length = info[1];
+    let mut info = buf.split_ascii_whitespace();
+    let mut get_n = || info
+        .next()
+        .unwrap()
+        .parse::<i32>();
+ 
+    let (n, length) = (get_n()?, get_n()?);
 
     for l in length..=100 {
         if (n - (l * (l - 1) / 2)) % l == 0 {
             let a = (n - (l * (l - 1) / 2)) / l;
-            // println!("l: {l}  a: {a}");
+
             if a >= 0 {
-                output = (a..a + l)
-                    .map(|n| n.to_string())
-                    .collect::<Vec<String>>()
-                    .join(" ");    
+                output.clear();
+                for i in a..a + l {
+                    output += &format!("{} ", i);
+                }  
             }
             break;
         }
