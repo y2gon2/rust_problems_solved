@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "dp04_1912"
+path = "dynamic_programming/dp04_1912.rs"
+
+[[example]]
 name = "dp03_2193"
 path = "dynamic_programming/dp03_2193.rs"
 
