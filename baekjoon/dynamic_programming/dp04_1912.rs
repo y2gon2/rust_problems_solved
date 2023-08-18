@@ -17,19 +17,23 @@ fn main() -> Result<(), Box<dyn Error>> {
         .parse::<i32>();
 
     let n = get_n()? as usize;
-    let mut list = vec![0usize; n];
+    let mut list = vec![0i32; n];
     let mut result = get_n()?;
-    let mut acc = result;
 
     list[0] = result;
 
     for i in 1..n {
-        acc += get_n()?;
+        let x = get_n()?;
+        let acc = x + list[i - 1];
 
         if acc > 0 {
-            acc _
-        } 
+            list[i] = acc;
+            result = result.max(acc); 
+        } else {
+            list[i] = 0;
+            result = result.max(x);
+        }
     }
-    
+    writeln!(output, "{}", result)?;
     Ok(())
 }
