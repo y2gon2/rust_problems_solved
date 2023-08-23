@@ -73,7 +73,7 @@ impl Sticker {
                 }
             }
         } 
-        println!("\n{:?}\n{:?}\n---------", self.acc1, self.acc2);
+        // println!("\n{:?}\n{:?}\n---------", self.acc1, self.acc2);
         return max(self.acc1[self.n - 1], self.acc2[self.n - 1])
     }
 }
