@@ -4,6 +4,22 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "sort04_11656"
+path = "sorting/sort04_11656.rs"
+
+[[example]]
+name = "dp13_11055"
+path = "dynamic_programming/dp13_11055.rs"
+
+[[example]]
+name = "sort03_11004"
+path = "sorting/sort03_11004.rs"
+
+[[example]]
+name = "dp12_9251"
+path = "dynamic_programming/dp12_9251.rs"
+
+[[example]]
 name = "dp11_12865"
 path = "dynamic_programming/dp11_12865.rs"
 
