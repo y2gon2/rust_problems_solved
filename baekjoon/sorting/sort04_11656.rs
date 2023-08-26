@@ -22,7 +22,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     list.sort();
-    println!("{:?}",  list);
 
     for w in list.iter() {
         writeln!(output, "{}", w)?;
