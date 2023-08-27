@@ -4,6 +4,14 @@ version = "0.1.0"
 edition = "2021"
 
 [[example]]
+name = "bit02_1094"
+path = "bit_masking/bit02_1094.rs"
+
+[[example]]
+name = "gra07_1058"
+path = "graph/gra07_1058.rs"
+
+[[example]]
 name = "sort04_11656"
 path = "sorting/sort04_11656.rs"
 
